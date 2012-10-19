@@ -93,7 +93,6 @@ cfg.target_buffs_num = 8
   -----------------------------
   
 cfg.SpellRange = true
-cfg.TotemBar = false
 cfg.Smooth = true
 cfg.DruidMana = true
 cfg.AuraBars = false

@@ -923,30 +923,7 @@ local UnitSpecific = {
 					
 				self.EclipseBar = ebar
             end
-			
-			if class == "SHAMAN" and cfg.TotemBar then
-                self.TotemBar = {}
-                self.TotemBar.Destroy = true
-                for i = 1, 4 do
-                    self.TotemBar[i] = createStatusbar(self, cfg.texture, nil, cfg.specific_power_height, (cfg.width+1)/4-1, 1, 1, 1, 1)
-					self.TotemBar[i]:SetFrameStrata("LOW")
-
-                    if (i == 1) then
-                        self.TotemBar[i]:SetPoint("TOPRIGHT", self, "BOTTOMRIGHT", 0, -1)
-                    else
-                        self.TotemBar[i]:SetPoint("RIGHT", self.TotemBar[i-1], "LEFT", -1, 0)
-                    end
-                    self.TotemBar[i]:SetBackdrop(backdrop)
-                    self.TotemBar[i]:SetBackdropColor(0.5, 0.5, 0.5)
-                    self.TotemBar[i]:SetMinMaxValues(0, 1)
-
-                    self.TotemBar[i].bg = self.TotemBar[i]:CreateTexture(nil, "BORDER")
-                    self.TotemBar[i].bg:SetAllPoints(self.TotemBar[i])
-                    self.TotemBar[i].bg:SetTexture(cfg.texture)
-                    self.TotemBar[i].bg.multiplier = 0.2
-					self.TotemBar[i].bd = framebd(self.TotemBar[i], self.TotemBar[i])
-                end
-            end
+						
 		end
 		
 		if class == "DRUID" and cfg.DruidMana then
