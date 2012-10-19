@@ -1,14 +1,13 @@
 ## Interface: 50001
 ## Title: oUF_Skaarj
-## Author: Skaarj
-## Version: 1.5
+## Author: awi
+## Version: 0.1
 ## Notes: oUF layout.
 ## Dependencies: oUF
 ## OptionalDeps: 
-## Credits: haste, Freebaser, Alez, Zork, Shestak
+## Credits: Skaarj, haste, Freebaser, Alez, Zork, Shestak
 
 cfg.lua
-Plugins\oUF_ThreatBar.lua
 Plugins\oUF_Experience.lua
 Plugins\oUF_Reputation.lua
 Plugins\oUF_Smooth.lua

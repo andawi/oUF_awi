@@ -98,12 +98,6 @@ cfg.Smooth = true
 cfg.DruidMana = true
 cfg.AuraBars = false
 
---Threat
-cfg.TreatBar = true 
-cfg.TreatBar_pos = {'CENTER', UIParent, 0, -311}
-cfg.TreatBar_Width = 250
-cfg.TreatBar_Height = 12
-
 --Experience/Reputation
 cfg.Bar = true 
 cfg.Bar_pos_x = 0

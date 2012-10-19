@@ -977,27 +977,7 @@ local UnitSpecific = {
 			gcd.bd = framebd(gcd, gcd)
 			self.GCD = gcd
 		end
-        
-	    if cfg.TreatBar then
-	        local treat = CreateFrame("StatusBar", self:GetName()..'_ThreatBar', UIParent)
-	        treat:SetPoint(unpack(cfg.TreatBar_pos))
-			treat:SetSize(cfg.TreatBar_Width, cfg.TreatBar_Height)
-	        treat:SetStatusBarTexture(cfg.texture)
-			treat.bg = treat:CreateTexture(nil, "BACKGROUND")
-            treat.bg:SetAllPoints(treat)
-            treat.bg:SetTexture(cfg.texture)
-            treat.bg:SetVertexColor(1, 0, 0, 0.2)
-			treat.Title = fs(treat, "OVERLAY", cfg.font, cfg.fontsize, cfg.fontflag, 0.8, 0.8, 0.8)
-	        treat.Title:SetText("Threat:")
-	        treat.Title:SetPoint("RIGHT", treat, "CENTER")
-	        treat.Text = fs(treat, "OVERLAY", cfg.font, cfg.fontsize, cfg.fontflag, 0.8, 0.8, 0.8)
-	        treat.Text:SetPoint("LEFT", treat, "CENTER")
-	        treat.bg = framebd(treat, treat)
-	        treat.useRawThreat = false
-			treat.usePlayerTarget = false
-			self.ThreatBar = treat
-		end
-		
+        		
         if cfg.Bar then 
 			if UnitLevel("player") < MAX_PLAYER_LEVEL then
                 local e = createStatusbar(self, cfg.texture, nil, cfg.Bar_Height, cfg.Bar_Width, 0, .7, 1, 1)
