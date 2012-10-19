@@ -94,8 +94,6 @@ cfg.target_buffs_num = 8
   
 cfg.Smooth = true
 cfg.DruidMana = true
-cfg.AuraBars = false
-
 
  --RaidDebuffs
 cfg.RaidDebuffs = true

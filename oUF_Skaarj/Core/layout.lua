@@ -747,13 +747,7 @@ local UnitSpecific = {
 		self.RaidIcon:SetSize(23, 23)
 	    self.RaidIcon:SetPoint("TOP", self.Health, 0, 11)
 		
-		if cfg.AuraBars then
-		    self.AuraBars = CreateFrame("Frame", nil, self)
-            self.AuraBars:SetPoint'LEFT'
-            self.AuraBars:SetPoint'RIGHT'
-            self.AuraBars:SetPoint('TOP', 0, 6)
-            self.AuraBars.spacing = 2		
-        elseif cfg.auras then
+		if cfg.auras then
             local d = CreateFrame("Frame", nil, self)
 			d.size = 24
 			d.spacing = 4
@@ -982,13 +976,7 @@ local UnitSpecific = {
 		self.RaidIcon:SetSize(23, 23)
 	    self.RaidIcon:SetPoint("TOP", self.Health, 0, 11)
 		
-		if cfg.AuraBars then
-		    self.AuraBars = CreateFrame("Frame", nil, self)
-            self.AuraBars:SetPoint'LEFT'
-            self.AuraBars:SetPoint'RIGHT'
-            self.AuraBars:SetPoint('TOP', 0, 6)
-            self.AuraBars.spacing = 2
-		elseif cfg.auras then
+		if cfg.auras then
             local b = CreateFrame("Frame", nil, self)
 			b.size = 24
 			b.spacing = 4
