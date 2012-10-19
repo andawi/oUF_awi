@@ -1282,12 +1282,6 @@ local UnitSpecific = {
         PvP:SetPoint('BOTTOMLEFT', self.Health, 'TOPRIGHT', -15, -20)
         self.PvP = PvP
 		
-		local t = CreateFrame("Frame", nil, self)
-		t:SetSize(cfg.arena_health_height+cfg.arena_power_height+1, cfg.arena_health_height+cfg.arena_power_height+1)
-		t:SetPoint('TOPRIGHT', self, 'TOPLEFT', -3, 0)
-		t.framebd = framebd(t, t)
-		self.Trinket = t
-		
 		local at = CreateFrame('Frame', nil, self)
 		at:SetAllPoints(t)
 		at:SetFrameStrata('HIGH')
