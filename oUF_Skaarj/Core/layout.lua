@@ -831,34 +831,7 @@ local UnitSpecific = {
                 end
             end
 		
-		    if class == "WARLOCK" then
-			    wsb = CreateFrame("Frame", self:GetName().."_WarlockSpecBar", self)
-				wsb:SetFrameStrata("LOW")
-			    wsb:SetPoint("TOPRIGHT", self, "BOTTOMRIGHT", 0, -1)
-			    wsb:SetSize(cfg.width, cfg.specific_power_height)
-				wsb.bd = framebd(wsb, wsb)
-				
-			    for i = 1, 4 do
-				    wsb[i] = createStatusbar(wsb, cfg.texture, nil, cfg.specific_power_height, (cfg.width+1)/4-1, 0.9, 0.37, 0.37, 1)
-				    if i == 1 then
-					    wsb[i]:SetPoint("LEFT", wsb, "LEFT")
-				    else
-					    wsb[i]:SetPoint("LEFT", wsb[i-1], "RIGHT", 1, 0)
-				    end
-					
-				    wsb.Text = fs(wsb[i], "OVERLAY", cfg.font, cfg.fontsize, cfg.fontflag, 0.8, 0.8, 0.8)
-                    wsb.Text:SetPoint("CENTER")
-                    self:Tag(wsb.Text, "[skaarj:demonik_fury]")
-
-				    wsb[i].bg = wsb[i]:CreateTexture(nil, "BORDER")
-				    wsb[i].bg:SetAllPoints()
-				    wsb[i].bg:SetTexture(cfg.texture)
-				    wsb[i].bg:SetVertexColor(0.9, 0.37, 0.37, 0.25)
-					
-					self.WarlockSpecBars = wsb
-			    end
-	        end
-			
+		    			
 			if class == "PRIEST" then
 			    sob = CreateFrame("Frame", self:GetName().."_ShadowOrbsBar", self)
 				sob:SetFrameStrata("LOW")

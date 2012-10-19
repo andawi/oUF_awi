@@ -8,6 +8,7 @@
 ## Credits: Skaarj, haste, Freebaser, Alez, Zork, Shestak
 
 cfg.lua
+
 Plugins\oUF_Smooth.lua
 Plugins\oUF_RaidDebuffs.lua
 Plugins\oUF_AuraTracker.lua
@@ -16,7 +17,7 @@ Plugins\oUF_AuraWatch.lua
 Plugins\oUF_Harmonyorbs.lua
 Plugins\oUF_Holypower.lua
 Plugins\oUF_Shadoworbs.lua
-Plugins\oUF_WarlockSpecBars.lua
+
 Core\functions.lua
 Core\raiddebuffs.lua
 Core\tags.lua
