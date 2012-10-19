@@ -824,8 +824,6 @@ local UnitSpecific = {
 
                 if class == "DEATHKNIGHT" then
                     self.Runes = b
-                elseif class == "PALADIN" then
-                    self.HolyPower = b
                 end
             end
 		

@@ -14,7 +14,6 @@ Plugins\oUF_RaidDebuffs.lua
 Plugins\oUF_AuraTracker.lua
 Plugins\oUF_DebuffHighlight.lua
 Plugins\oUF_AuraWatch.lua
-Plugins\oUF_Holypower.lua
 Plugins\oUF_Shadoworbs.lua
 
 Core\functions.lua
