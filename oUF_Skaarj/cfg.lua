@@ -98,12 +98,6 @@ cfg.Smooth = true
 cfg.DruidMana = true
 cfg.AuraBars = false
 
---Experience/Reputation
-cfg.Bar = true 
-cfg.Bar_pos_x = 0
-cfg.Bar_pos_y = -8
-cfg.Bar_Width = 250
-cfg.Bar_Height = 7
 
 --GCD
 cfg.gcd = true

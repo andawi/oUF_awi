@@ -8,8 +8,6 @@
 ## Credits: Skaarj, haste, Freebaser, Alez, Zork, Shestak
 
 cfg.lua
-Plugins\oUF_Experience.lua
-Plugins\oUF_Reputation.lua
 Plugins\oUF_Smooth.lua
 Plugins\oUF_TotemBar.lua
 Plugins\oUF_SpellRange.lua

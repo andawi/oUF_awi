@@ -978,33 +978,7 @@ local UnitSpecific = {
 			self.GCD = gcd
 		end
         		
-        if cfg.Bar then 
-			if UnitLevel("player") < MAX_PLAYER_LEVEL then
-                local e = createStatusbar(self, cfg.texture, nil, cfg.Bar_Height, cfg.Bar_Width, 0, .7, 1, 1)
-                e:SetPoint('TOP', self, 'BOTTOM', cfg.Bar_pos_x, cfg.Bar_pos_y)
-                e.Rested = createStatusbar(self, cfg.texture, nil, nil, nil, 0, .4, 1, .6)
-                e.Rested:SetAllPoints(e)
-                e.Rested:SetBackdrop(backdrop)
-                e.Rested:SetBackdropColor(0, 0, 0)
-                e.bg = e.Rested:CreateTexture(nil, 'BORDER')
-                e.bg:SetAllPoints(e)
-                e.bg:SetTexture(cfg.texture)
-                e.bg:SetVertexColor(0, .7, 1, 0.2)
-                e.bd = framebd(e, e)
-			    self.Experience = e
-            else
-		        local r = createStatusbar(self, cfg.texture, nil, cfg.Bar_Height, cfg.Bar_Width, 0, .7, 1, 1)
-		        r:SetPoint('TOP', self, 'BOTTOM', cfg.Bar_pos_x, cfg.Bar_pos_y)
-		        local bg = r:CreateTexture(nil, 'BORDER')
-		        bg:SetAllPoints(r)
-                bg:SetTexture(cfg.texture)
-                bg:SetVertexColor(0, .7, 1, 0.2)
-		        r.bd = framebd(r, r)
-		        self.Reputation = r
-			end
-	    end
-		
-	    if cfg.AltPowerBar then
+        if cfg.AltPowerBar then
 	       local altp = createStatusbar(self, cfg.texture, nil, cfg.AltPowerBar_Height, cfg.AltPowerBar_Width, 1, 1, 1, 1)
            altp:SetPoint(unpack(cfg.AltPowerBar_pos))
            altp.bg = altp:CreateTexture(nil, 'BORDER')
