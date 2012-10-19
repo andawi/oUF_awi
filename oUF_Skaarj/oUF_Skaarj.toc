@@ -9,7 +9,6 @@
 
 cfg.lua
 Plugins\oUF_Smooth.lua
-Plugins\oUF_SpellRange.lua
 Plugins\oUF_RaidDebuffs.lua
 Plugins\oUF_AuraTracker.lua
 Plugins\oUF_Trinkets.lua

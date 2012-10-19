@@ -92,7 +92,6 @@ cfg.target_buffs_num = 8
   -- Plugins 
   -----------------------------
   
-cfg.SpellRange = true
 cfg.Smooth = true
 cfg.DruidMana = true
 cfg.AuraBars = false

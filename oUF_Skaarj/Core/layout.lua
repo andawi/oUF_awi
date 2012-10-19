@@ -703,12 +703,6 @@ local Shared = function(self, unit)
 	end
 	self.ReadyCheck = rc
 	
-	if cfg.SpellRange then
-	    self.SpellRange = {
-	    insideAlpha = 1,
-        outsideAlpha = 0.6}
-	end
-	
 	RaidIcon(self)
 	Highlight(self)
 	Setfocus(self)
