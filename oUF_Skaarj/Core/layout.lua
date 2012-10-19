@@ -826,8 +826,6 @@ local UnitSpecific = {
                     self.Runes = b
                 elseif class == "PALADIN" then
                     self.HolyPower = b
-				elseif class == "MONK" then
-                    self.Harmony = b
                 end
             end
 		
