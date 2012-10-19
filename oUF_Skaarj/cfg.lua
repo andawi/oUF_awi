@@ -168,59 +168,7 @@ cfg.spellIDs = {
 	},
  }
  
-  -----------------------------
-  -- Castbars 
-  -----------------------------
-
--- Player
-
-cfg.player_castbar = true
-cfg.player_cb_pos = {"BOTTOM", UIParent, 15, 155}
-cfg.player_cb_Width = 235
-cfg.player_cb_Height = 25
-
--- Target
-
-cfg.target_castbar = true
-cfg.target_cb_pos_x = 0
-cfg.target_cb_pos_y = -8
-cfg.target_cb_Height = 16
-cfg.target_cb_Width = (cfg.width - (cfg.target_cb_Height + 3))
-
--- Focus
-
-cfg.focus_castbar = true
-cfg.focus_cb_pos_x = 0
-cfg.focus_cb_pos_y = -8
-cfg.focus_cb_Height = 16
-cfg.focus_cb_Width = (cfg.width - (cfg.focus_cb_Height + 3))
-
-
--- Boss
-
-cfg.boss_castbar = true
-cfg.boss_cb_pos_x = 0
-cfg.boss_cb_pos_y = -1
-cfg.boss_cb_Height = 16
-cfg.boss_cb_Width = (cfg.boss_width - (cfg.boss_cb_Height + 3))
-
--- Party
-
-cfg.party_castbar = true
-cfg.party_cb_pos_x = 0
-cfg.party_cb_pos_y = -1
-cfg.party_cb_Height = 16
-cfg.party_cb_Width = (cfg.party_width - (cfg.party_cb_Height + 3))
-
--- Arena
-
-cfg.arena_castbar = true
-cfg.arena_cb_pos_x = 0
-cfg.arena_cb_pos_y = -1
-cfg.arena_cb_Height = 16
-cfg.arena_cb_Width = ((cfg.arena_width+cfg.arena_health_height+cfg.arena_power_height+1+3) - (cfg.arena_cb_Height + 3))
-
-
+ 
   -----------------------------
   -- Colors 
   -----------------------------
@@ -229,7 +177,6 @@ cfg.class_colorbars = false
   
   cfg.Color = { 				
        Health = {r =  0.3,	g =  0.3, 	b =  0.3},
-	  Castbar = {r =  0,	g =  0.7, 	b =  1  },
   }
 
   -----------------------------

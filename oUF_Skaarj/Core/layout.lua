@@ -318,229 +318,6 @@ local createAuraWatch = function(self, unit)
 	end
 end
 
-local channelingTicks = {
-	[GetSpellInfo(44203)] = 4,	-- Tranquility
-	[GetSpellInfo(16914)] = 10,	-- Hurricane
-	[GetSpellInfo(106996)] = 10,-- Astral Storm
-	-- Mage
-	[GetSpellInfo(5143)] = 5,	-- Arcane Missiles
-	[GetSpellInfo(10)] = 8,		-- Blizzard
-	[GetSpellInfo(12051)] = 4,	-- Evocation
-	-- Monk
-	[GetSpellInfo(115175)] = 9,	-- Soothing Mist
-	-- Priest
-	[GetSpellInfo(15407)] = 3,	-- Mind Flay
-	[GetSpellInfo(48045)] = 5,	-- Mind Sear
-	[GetSpellInfo(47540)] = 2,	-- Penance
-	[GetSpellInfo(64901)] = 4,	-- Hymn of Hope
-	[GetSpellInfo(64843)] = 4,	-- Divine Hymn
-	-- Warlock
-	[GetSpellInfo(689)] = 6,	-- Drain Life
-	[GetSpellInfo(108371)] = 6, -- Harvest Life
-	[GetSpellInfo(1120)] = 6,	-- Drain Soul
-	[GetSpellInfo(755)] = 6,	-- Health Funnel
-	[GetSpellInfo(1949)] = 15,	-- Hellfire
-	[GetSpellInfo(5740)] = 4,	-- Rain of Fire
-	[GetSpellInfo(103103)] = 3,	-- Malefic Grasp
-}
-
-local ticks = {}
-
-local setBarTicks = function(castBar, ticknum)
-	if ticknum and ticknum > 0 then
-		local delta = castBar:GetWidth() / ticknum
-		for k = 1, ticknum do
-			if not ticks[k] then
-				ticks[k] = castBar:CreateTexture(nil, 'OVERLAY')
-				ticks[k]:SetTexture(cfg.texture)
-				ticks[k]:SetVertexColor(0.6, 0.6, 0.6)
-				ticks[k]:SetWidth(1)
-				ticks[k]:SetHeight(21)
-			end
-			ticks[k]:ClearAllPoints()
-			ticks[k]:SetPoint('CENTER', castBar, 'LEFT', delta * k, 0 )
-			ticks[k]:Show()
-		end
-	else
-		for k, v in pairs(ticks) do
-			v:Hide()
-		end
-	end
-end
-
-local OnCastbarUpdate = function(self, elapsed)
-	local currentTime = GetTime()
-	if self.casting or self.channeling then
-		local parent = self:GetParent()
-		local duration = self.casting and self.duration + elapsed or self.duration - elapsed
-		if (self.casting and duration >= self.max) or (self.channeling and duration <= 0) then
-			self.casting = nil
-			self.channeling = nil
-			return
-		end
-		if parent.unit == 'player' then
-			if self.delay ~= 0 then
-				self.Time:SetFormattedText('%.1f | %.1f |cffff0000|%.1f|r', self.max - duration, self.max, self.delay )
-			else
-				self.Time:SetFormattedText('%.1f | %.1f', duration, self.max)
-				self.Lag:SetFormattedText('%d ms', self.SafeZone.timeDiff * 1000)
-			end
-		else
-			self.Time:SetFormattedText('%.1f | %.1f', duration, self.casting and self.max + self.delay or self.max - self.delay)
-		end
-		self.duration = duration
-		self:SetValue(duration)
-		self.Spark:SetPoint('CENTER', self, 'LEFT', (duration / self.max) * self:GetWidth(), 0)
-	elseif self.fadeOut then
-		self.Spark:Hide()
-		local alpha = self:GetAlpha() - 0.02
-		if alpha > 0 then
-			self:SetAlpha(alpha)
-		else
-			self.fadeOut = nil
-			self:Hide()
-		end
-	end
-end
-
-local OnCastSent = function(self, event, unit)
-	if self.unit ~= unit or not self.Castbar.SafeZone then return end
-	self.Castbar.SafeZone.sendTime = GetTime()
-end
-
-local PostCastStart = function(self, unit)
-	self:SetAlpha(1.0)
-	self.Spark:Show()
-	self:SetStatusBarColor(unpack(self.casting and self.CastingColor or self.ChannelingColor))
-	if self.casting then
-		self.cast = true
-	else
-		self.cast = false
-	end
-	if unit == 'vehicle' then
-		self.SafeZone:Hide()
-		self.Lag:Hide()
-	elseif unit == 'player' then
-		local sf = self.SafeZone
-		sf.timeDiff = GetTime() - sf.sendTime
-		sf.timeDiff = sf.timeDiff > self.max and self.max or sf.timeDiff
-		sf:SetWidth(self:GetWidth() * sf.timeDiff / self.max)
-		sf:Show()
-		self.Lag:Show()
-		if self.casting then
-			setBarTicks(self, 0)
-		else
-			local spell = UnitChannelInfo(unit)
-			self.channelingTicks = channelingTicks[spell] or 0
-			setBarTicks(self, self.channelingTicks)
-		end
-	end
-	if unit ~= 'player' then
-        if self.interrupt then
-            self.Backdrop:SetBackdropBorderColor(1, .9, .4)
-			self.IBackdrop:SetBackdropBorderColor(1, .9, .4)
-        else
-            self.Backdrop:SetBackdropBorderColor(0, 0, 0)
-			self.IBackdrop:SetBackdropBorderColor(0, 0, 0)
-        end
-    end
-end
-
-local PostCastStop = function(self, unit)
-	if not self.fadeOut then
-		self:SetStatusBarColor(unpack(self.CompleteColor))
-		self.fadeOut = true
-	end
-	self:SetValue(self.cast and self.max or 0)
-	self:Show()
-end
-
-local PostCastFailed = function(self, event, unit)
-	self:SetStatusBarColor(unpack(self.FailColor))
-	self:SetValue(self.max)
-	if not self.fadeOut then
-		self.fadeOut = true
-	end
-	self:Show()
-end
-
-local castbar = function(self, unit)
-    
-	local cb = createStatusbar(self, cfg.texture, nil, nil, nil, 1, 1, 1, 1)
-    cb:SetToplevel(true)		
-	local cbbg = cb:CreateTexture(nil, "BACKGROUND")
-    cbbg:SetAllPoints(cb)
-    cbbg:SetTexture(cfg.texture)
-    cbbg:SetVertexColor(.5, .5, .5, .2)
-
-    cb.Time = fs(cb, "OVERLAY", cfg.font, cfg.fontsize, cfg.fontflag, 1, 1, 1)
-	cb.Time:SetPoint("RIGHT", cb, -2, 0)
-		
-	cb.Text = fs(cb, "OVERLAY", cfg.font, cfg.fontsize, cfg.fontflag, 1, 1, 1, "LEFT")
-    cb.Text:SetPoint("LEFT", cb, 2, 0)
-    cb.Text:SetPoint("RIGHT", cb.Time, "LEFT")
-
-	cb.CastingColor = {cfg.Color.Castbar.r, cfg.Color.Castbar.g, cfg.Color.Castbar.b}
-	cb.CompleteColor = {0.12, 0.86, 0.15}
-	cb.FailColor = {1.0, 0.09, 0}
-	cb.ChannelingColor = {0.32, 0.3, 1}
-
-	cb.Icon = cb:CreateTexture(nil, 'ARTWORK')
-	cb.Icon:SetPoint("TOPRIGHT", cb, "TOPLEFT", -3, 0)
-    cb.Icon:SetTexCoord(.1, .9, .1, .9)
-
-	if self.unit == "player" then
-		cb:SetPoint(unpack(cfg.player_cb_pos))
-		cb:SetSize(cfg.player_cb_Width, cfg.player_cb_Height)
-	    cb.Icon:SetSize(cfg.player_cb_Height, cfg.player_cb_Height)
-		cb.SafeZone = cb:CreateTexture(nil, 'BORDER')
-		cb.SafeZone:SetTexture(cfg.texture)
-		cb.SafeZone:SetVertexColor(.8,.11,.15)
-		cb.Lag = fs(cb, "OVERLAY", cfg.font, cfg.fontsize, cfg.fontflag, 1, 1, 1)
-		cb.Lag:SetPoint('BOTTOMRIGHT', 0, -3)
-		cb.Lag:SetJustifyH('RIGHT')
-		self:RegisterEvent('UNIT_SPELLCAST_SENT', OnCastSent)
-	elseif self.unit == 'target' then
-		cb:SetPoint("TOPRIGHT", self, "BOTTOMRIGHT", cfg.target_cb_pos_x, cfg.target_cb_pos_y)
-		cb:SetSize(cfg.target_cb_Width, cfg.target_cb_Height)
-	    cb.Icon:SetSize(cfg.target_cb_Height, cfg.target_cb_Height)
-	elseif self.unit == 'focus' then
-		cb:SetPoint("TOPRIGHT", self, "BOTTOMRIGHT", cfg.focus_cb_pos_x, cfg.focus_cb_pos_y)
-		cb:SetSize(cfg.focus_cb_Width, cfg.focus_cb_Height)
-		cb.Icon:SetSize(cfg.focus_cb_Height, cfg.focus_cb_Height)
-	elseif self.unit == 'boss' then
-		cb:SetPoint("TOPRIGHT", self, "BOTTOMRIGHT", cfg.boss_cb_pos_x, cfg.boss_cb_pos_y)
-		cb:SetSize(cfg.boss_cb_Width, cfg.boss_cb_Height)
-		cb.Icon:SetSize(cfg.boss_cb_Height, cfg.boss_cb_Height)
-	elseif self.unit == 'party' then
-		cb:SetPoint("TOPRIGHT", self, "BOTTOMRIGHT", cfg.party_cb_pos_x, cfg.party_cb_pos_y)
-		cb:SetSize(cfg.party_cb_Width, cfg.party_cb_Height)
-		cb.Icon:SetSize(cfg.party_cb_Height, cfg.party_cb_Height)
-	elseif self.unit == 'arena' then
-		cb:SetPoint("TOPRIGHT", self, "BOTTOMRIGHT", cfg.arena_cb_pos_x, cfg.arena_cb_pos_y)
-		cb:SetSize(cfg.arena_cb_Width, cfg.arena_cb_Height)
-		cb.Icon:SetSize(cfg.arena_cb_Height, cfg.arena_cb_Height)
-	end
-
-	cb.Spark = cb:CreateTexture(nil,'OVERLAY')
-	cb.Spark:SetBlendMode('Add')
-	cb.Spark:SetHeight(cb:GetHeight() * 2.3)
-	cb.Spark:SetWidth(10)
-	cb.Spark:SetVertexColor(1, 1, 1)
-
-	cb.OnUpdate = OnCastbarUpdate
-	cb.PostCastStart = PostCastStart
-	cb.PostChannelStart = PostCastStart
-	cb.PostCastStop = PostCastStop
-	cb.PostChannelStop = PostCastStop
-	cb.PostCastFailed = PostCastFailed
-	cb.PostCastInterrupted = PostCastFailed
-	cb.bg = cbbg
-	cb.Backdrop = framebd(cb, cb)
-	cb.IBackdrop = framebd(cb, cb.Icon)
-	self.Castbar = cb
-	
-end
 
 local RaidIcon = function(self)
 	ricon = self.Health:CreateTexture(nil, "OVERLAY")
@@ -721,14 +498,7 @@ local UnitSpecific = {
 		
 		if cfg.portraits then Portraits(self) end
 	
-	    if cfg.player_castbar then
-            castbar(self)
-	        PetCastingBarFrame:UnregisterAllEvents()
-	        PetCastingBarFrame.Show = function() end
-	        PetCastingBarFrame:Hide()
-        end
-		
-		if cfg.healcomm then Healcomm(self) end
+	    if cfg.healcomm then Healcomm(self) end
 		
 		local name = fs(self.Health, "OVERLAY", cfg.font, cfg.fontsize, cfg.fontflag, 1, 1, 1)
         name:SetPoint("LEFT", self.Health, 4, 0)
@@ -922,8 +692,6 @@ local UnitSpecific = {
 		self.Power:SetHeight(cfg.power_height)
 		self.unit = "target"
 		
-		if cfg.target_castbar then castbar(self) end
-		
 		if cfg.healcomm then Healcomm(self) end
 		
 		if cfg.portraits then Portraits(self) end
@@ -1028,8 +796,6 @@ local UnitSpecific = {
 		self.Power:SetHeight(cfg.power_height)
 		self.unit = "focus"
 		
-		if cfg.focus_castbar then castbar(self) end
-		
 		if cfg.healcomm then Healcomm(self) end
 		
 		local name = fs(self.Health, "OVERLAY", cfg.font, cfg.fontsize, cfg.fontflag, 1, 1, 1)
@@ -1071,8 +837,6 @@ local UnitSpecific = {
 		self.Health:SetHeight(cfg.boss_health_height)
 		self.Power:SetHeight(cfg.boss_power_height)
 		self.unit = "boss"
-		
-		if cfg.boss_castbar then castbar(self) end
 		
 		local name = fs(self.Health, "OVERLAY", cfg.font, cfg.fontsize, cfg.fontflag, 1, 1, 1)
         name:SetPoint("LEFT", self.Health, 4, 0)
@@ -1173,8 +937,6 @@ local UnitSpecific = {
 		self.Power:SetHeight(cfg.party_power_height)
 		self.unit = "party"
 		
-		if cfg.party_castbar then castbar(self) end
-		
 		if cfg.healcomm then Healcomm(self) end
 		
 		Resurrect(self)
@@ -1227,8 +989,6 @@ local UnitSpecific = {
 		self.Health:SetHeight(cfg.arena_health_height)
 		self.Power:SetHeight(cfg.arena_power_height)
 		self.unit = "arena"
-		
-		if cfg.arena_castbar then castbar(self) end
 		
 		if cfg.healcomm then Healcomm(self) end
 		
