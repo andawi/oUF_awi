@@ -13,7 +13,6 @@ Plugins\oUF_RaidDebuffs.lua
 Plugins\oUF_AuraTracker.lua
 Plugins\oUF_Trinkets.lua
 Plugins\oUF_DebuffHighlight.lua
-Plugins\oUF_GCD.lua
 Plugins\oUF_AuraWatch.lua
 Plugins\oUF_AuraBars.lua
 Plugins\oUF_Harmonyorbs.lua

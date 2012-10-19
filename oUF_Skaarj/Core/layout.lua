@@ -935,21 +935,7 @@ local UnitSpecific = {
             self.DruidMana.bg = bg
 		end
 		
-		if cfg.gcd then
-			local gcd = CreateFrame("StatusBar", self:GetName().."_GCD", self)
-			gcd:SetSize(cfg.gcd_Width, cfg.gcd_Height)
-		    gcd:SetPoint(unpack(cfg.gcd_pos))
-		    gcd:SetStatusBarTexture(cfg.texture)
-		    gcd:SetStatusBarColor(cfg.Color.GCD.r, cfg.Color.GCD.g, cfg.Color.GCD.b)
-			gcd.bg = gcd:CreateTexture(nil, 'BORDER')
-            gcd.bg:SetAllPoints(gcd)
-            gcd.bg:SetTexture(cfg.texture)
-            gcd.bg:SetVertexColor(cfg.Color.GCD.r, cfg.Color.GCD.g, cfg.Color.GCD.b, 0.2)
-			gcd.bd = framebd(gcd, gcd)
-			self.GCD = gcd
-		end
-        		
-        if cfg.AltPowerBar then
+		if cfg.AltPowerBar then
 	       local altp = createStatusbar(self, cfg.texture, nil, cfg.AltPowerBar_Height, cfg.AltPowerBar_Width, 1, 1, 1, 1)
            altp:SetPoint(unpack(cfg.AltPowerBar_pos))
            altp.bg = altp:CreateTexture(nil, 'BORDER')

@@ -97,12 +97,6 @@ cfg.DruidMana = true
 cfg.AuraBars = false
 
 
---GCD
-cfg.gcd = true
-cfg.gcd_pos = {'BOTTOM', UIParent, 0, 200}
-cfg.gcd_Width = 229
-cfg.gcd_Height = 12
-
  --RaidDebuffs
 cfg.RaidDebuffs = true
 cfg.ShowDispelableDebuff = true
@@ -238,7 +232,6 @@ cfg.class_colorbars = false
   cfg.Color = { 				
        Health = {r =  0.3,	g =  0.3, 	b =  0.3},
 	  Castbar = {r =  0,	g =  0.7, 	b =  1  },
-		  GCD = {r =  0.55,	g =  0.57, 	b =  0.61},
   }
 
   -----------------------------
